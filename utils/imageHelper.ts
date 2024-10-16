@@ -161,15 +161,22 @@ export async function maskImage(originalImage: string, maskImage: string): Promi
       });
 
       original.scan(0, 0, original.bitmap.width, original.bitmap.height, (x, y, idx) => {
-        const red = original.bitmap.data[idx + 0];
-        const green = original.bitmap.data[idx + 1];
-        const blue = original.bitmap.data[idx + 2];
-        const alpha = original.bitmap.data[idx + 3];
-  
-        if ((red <= 20 && green <= 20 && blue <= 20) && alpha === 255) {
+        const red = mask.bitmap.data[idx + 0];
+        const green = mask.bitmap.data[idx + 1];
+        const blue = mask.bitmap.data[idx + 2];
+  /* 
+        if ((red < 50 && green < 50 && blue < 50)) {
           // Pikseli şeffaf yap
           original.bitmap.data[idx + 3] = 0;
-        }
+        } */
+         // Ortalama RGB değerini (gri tonlama) bul
+         const averageGray = (red + green + blue) / 3;
+
+         // Gri tonlamayı %0 ile %1 arasında bir opaklık değeri olarak kullan
+         const opacity = averageGray / 255;
+
+         // Orijinal resmin alpha (opaklık) kanalını ayarlayın
+         original.bitmap.data[idx + 3] = Math.floor(opacity * 255);
       });
 
       return original.bitmap.data

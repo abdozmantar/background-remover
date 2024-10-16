@@ -48,7 +48,7 @@ const Home: React.FC = () => {
         setOutputSrc(outputCanvas.toDataURL());
 
       } catch (error) {
-        console.error("Mask image işlemi sırasında hata oluştu:", error);
+        console.error("Error ", error);
       }
     };
   };
