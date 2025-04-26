@@ -54,7 +54,6 @@ const Home: React.FC = () => {
   };
 
   async function getImageData(image: HTMLImageElement): Promise<string> {
-    // Bir canvas oluştur
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (ctx === null)
@@ -64,14 +63,8 @@ const Home: React.FC = () => {
     canvas.height = image.height;
 
     ctx.drawImage(image, 0, 0);
-
-    //const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-
-    //const uint32Array = new Float32Array(imageData.buffer);
     return canvas.toDataURL();
   }
-
-
 
   return (
     <div>
